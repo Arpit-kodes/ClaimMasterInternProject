@@ -12,12 +12,12 @@ const ClaimHistory = require('./models/ClaimHistory');
 const app  = express();
 const srv  = http.createServer(app);
 
-// ✅ Allowed origins
+//  Allowed origins
 const allowedOrigins = [
   'https://claim-master-intern-project.vercel.app'
 ];
 
-// ✅ Setup Socket.IO with CORS
+// Setup Socket.IO with CORS
 const io = new Server(srv, {
   cors: {
     origin: allowedOrigins,
@@ -25,7 +25,7 @@ const io = new Server(srv, {
   }
 });
 
-// ✅ Use dynamic CORS middleware for Express
+//  Use dynamic CORS middleware for Express
 app.use(cors({
   origin: function (origin, callback) {
     if (!origin || allowedOrigins.includes(origin)) {
@@ -43,7 +43,7 @@ app.use(express.json());
 /* ───────────── ROUTES ───────────── */
 app.get('/', (_req, res) => res.send('🎉 Leaderboard API running'));
 
-/* ▶️  Create user */
+/*   Create user */
 app.post('/api/users', async (req, res) => {
   try {
     const { name } = req.body;
@@ -57,7 +57,7 @@ app.post('/api/users', async (req, res) => {
   }
 });
 
-/* ▶️  Claim random points */
+/*   Claim random points */
 app.post('/api/claim', async (req, res) => {
   try {
     const { userId } = req.body;
@@ -86,7 +86,7 @@ app.post('/api/claim', async (req, res) => {
   }
 });
 
-/* ▶️  Reset leaderboard & history */
+/*   Reset leaderboard & history */
 app.post('/api/reset', async (_req, res) => {
   try {
     await User.updateMany({}, { $set: { totalPoints: 0 } });
@@ -99,7 +99,7 @@ app.post('/api/reset', async (_req, res) => {
   }
 });
 
-/* ▶️  Get leaderboard */
+/*   Get leaderboard */
 app.get('/api/leaderboard', async (_req, res) => {
   try {
     const users = await User.find().sort({ totalPoints: -1 });
@@ -109,7 +109,7 @@ app.get('/api/leaderboard', async (_req, res) => {
   }
 });
 
-/* ▶️  Get history (latest 100) */
+/*   Get history (latest 100) */
 app.get('/api/history', async (_req, res) => {
   try {
     const history = await ClaimHistory.find()
@@ -125,14 +125,14 @@ app.get('/api/history', async (_req, res) => {
 /* ───────────── SOCKET.IO ───────────── */
 io.on('connection', socket => {
   console.log('🔌  Client connected:', socket.id);
-  socket.on('disconnect', () => console.log('❌  Client disconnected', socket.id));
+  socket.on('disconnect', () => console.log('  Client disconnected', socket.id));
 });
 
 /* ───────────── START ───────────── */
 const PORT = process.env.PORT || 4000;
 mongoose.connect(process.env.MONGO_URI)
   .then(() => {
-    console.log('✅ Connected to MongoDB');
-    srv.listen(PORT, () => console.log(`🚀 Server + Socket.io on http://localhost:${PORT}`));
+    console.log(' Connected to MongoDB');
+    srv.listen(PORT, () => console.log(` Server + Socket.io on http://localhost:${PORT}`));
   })
   .catch(err => console.error('MongoDB error:', err));

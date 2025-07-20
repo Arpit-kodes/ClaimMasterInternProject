@@ -7,7 +7,7 @@ const users = ['Rahul', 'Kamal', 'Sanak', 'Neha', 'Priya', 'Ravi', 'Simran', 'Am
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
 }).then(async () => {
-  console.log('🌱 Connected to DB for seeding');
+  console.log(' Connected to DB for seeding');
 
   // Clear existing users
   await User.deleteMany({});
@@ -17,7 +17,7 @@ mongoose.connect(process.env.MONGO_URI, {
     await User.create({ name });
   }
 
-  console.log('✅ 10 Users seeded successfully!');
+  console.log(' 10 Users seeded successfully!');
   mongoose.disconnect();
 }).catch(err => console.log(err));
 
