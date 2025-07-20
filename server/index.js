@@ -41,7 +41,7 @@ app.use(cors({
 app.use(express.json());
 
 /* ───────────── ROUTES ───────────── */
-app.get('/', (_req, res) => res.send('🎉 Leaderboard API running'));
+app.get('/', (_req, res) => res.send(' Leaderboard API running'));
 
 /*   Create user */
 app.post('/api/users', async (req, res) => {
@@ -124,7 +124,7 @@ app.get('/api/history', async (_req, res) => {
 
 /* ───────────── SOCKET.IO ───────────── */
 io.on('connection', socket => {
-  console.log('🔌  Client connected:', socket.id);
+  console.log('  Client connected:', socket.id);
   socket.on('disconnect', () => console.log('  Client disconnected', socket.id));
 });
 
